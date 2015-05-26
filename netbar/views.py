@@ -81,17 +81,17 @@ def index(request):
 
     elif isinstance(message, EventMessage):
         reply_text2=message.key
-        if(reply_text2=='RemainPC'):
-            #selsql='select numb num from Comuter where usable =%s'
+        '''if(reply_text2=='RemainPC'):
+            response = wechat_instance.response_text(content='剩余 '+str(pcset.__len__())+' 台主机, 主机号分别是: '+pcid)'''
+        if(reply_text2=='BindVIP'):
+            response = wechat_instance.response_text('请输入“BD”+身份证号码。\n例如：bd321326199509026644\n（注意：一个微信号只能绑定一个身份证号码）')
+
+        elif(reply_text2=='ReservePC'):
+             #selsql='select numb num from Comuter where usable =%s'
             pcset=Computer.objects.filter(usable='0')
             pcid=''
             for pc in pcset:
                 pcid+=pc.numb+','
-            response = wechat_instance.response_text(content='剩余 '+str(pcset.__len__())+' 台主机, 主机号分别是: '+pcid)
-        elif(reply_text2=='BindVIP'):
-            response = wechat_instance.response_text('请输入“BD”+身份证号码。\n例如：bd321326199509026644\n（注意：一个微信号只能绑定一个身份证号码）')
-
-        elif(reply_text2=='ReservePC'):
             response = wechat_instance.response_music(music_url='http://guandashi.xicp.net/static/AreYouOk.mp3',title='Are You OK',description='歌手：雷军')
         elif(reply_text2=='CallMaster'):
 
