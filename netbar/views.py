@@ -81,8 +81,6 @@ def index(request):
 
     elif isinstance(message, EventMessage):
         reply_text2=message.key
-        '''if(reply_text2=='RemainPC'):
-            response = wechat_instance.response_text(content='剩余 '+str(pcset.__len__())+' 台主机, 主机号分别是: '+pcid)'''
         if(reply_text2=='BindVIP'):
             response = wechat_instance.response_text('请输入“BD”+身份证号码。\n例如：bd321326199509026644\n（注意：一个微信号只能绑定一个身份证号码）')
 
