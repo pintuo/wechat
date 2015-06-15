@@ -12,6 +12,7 @@ from wechat_sdk.messages import *
 from .models import *
 from wechat_sdk.context.framework.django import DatabaseContextStore
 from netbar.checkcard import *
+#from django.shortcuts import get_object_or_404, render
 
 WECHAT_TOKEN = '123456'
 AppID = 'wxdddaafdc0183cfa7'
@@ -23,7 +24,56 @@ wechat_instance = WechatBasic(
     appid=AppID,
     appsecret=AppSecret
 )
+wechat_instance.create_menu({
+        "button": [
+            {
+                "name": "来上网吧",
+                "sub_button": [
+                     {
+                        "type": "click",
+                        "name": "绑定VIP",
+                        "key": "BindVIP",
+                    },
+		            {
+                        "type": "view",
+                        "name": "预定机器",
+                        "url": "http://guandashi.xicp.net/netbar_reservePC",
+                    },
+                    {
+                        "type": "click",
+                        "name": "优惠活动",
+                        "key": "Promotio",
+                    },
 
+                ]
+            },
+            {
+                "type": "view",
+                "name": "吃与喝",
+                "url": "http://guandashi.xicp.net/eleme",
+            },
+            {
+                "name": "服务中心",
+                "sub_button": [
+                    {
+                        "type": "click",
+                        "name": "呼叫网管",
+                        "key": "CallMaster",
+                    },
+                    {
+                        "type": "click",
+                        "name": "消费查询",
+                        "key": "ConsumeQuery",
+                    },
+                   {
+                        "type": "click",
+                        "name": "结账下机",
+                        "key": "CheckOut",
+                    },
+                ]
+            }
+        ]
+    })
 @csrf_exempt
 def index(request):
 
@@ -52,11 +102,60 @@ def index(request):
     message = wechat_instance.get_message()
     # 关注事件以及不匹配时的默认回复
     #print(wechat_instance.show_qrcode(ticket='gQEq8DoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL2NVeEdYY3ZsTDFkV0ZpcVY2bUI0AAIESZFZVQMEAAAAAA=='))
-    response = wechat_instance.response_text(
-        content = (
-            '感谢您的关注！\n回复【功能】两个字查看支持的功能.'
-            '\n【<a href="http://guandashi.xicp.net/polls">Welcom to mysite 1</a>】'
-            ))
+    article=[
+                {
+                    'title':'博达网咖--年轻人的竞技场',
+                    'description': '图文内容',
+                    'picurl': 'http://pic26.nipic.com/20121220/11562079_220947605169_2.jpg',
+                    'url': '',
+                },
+                {
+                    'title':'回复“功能”获取服务口令',
+                    'description': '图文内容',
+                    'picurl': 'http://guandashi.xicp.net/static/a1.jpg',
+                    'url': 'http://guandashi.xicp.net/static/a1.jpg',
+                },
+                  {
+                    'title':'回复“活动”获取优惠信息',
+                    'description': '图文内容',
+                    'picurl': 'http://guandashi.xicp.net/static/a2.jpg',
+                    'url': 'http://guandashi.xicp.net/static/a2.jpg',
+                },
+                {
+                    'title':'点击“吃与喝”菜单享受美味',
+                    'description': '图文内容',
+                    'picurl': 'http://guandashi.xicp.net/static/chikencoke.jpg',
+                    'url': 'http://guandashi.xicp.net/static/chikencoke.jpg',
+                },
+            ]
+    Promotio=[
+                {
+                    'title':'早市1元',
+                    'description': '图文内容',
+                    'picurl': 'http://guandashi.xicp.net/static/a4.jpg',
+                    'url': 'http://guandashi.xicp.net/static/a4.jpg',
+                },
+                {
+                    'title':'充值好礼',
+                    'description': '图文内容',
+                    'picurl': 'http://guandashi.xicp.net/static/a5.jpg',
+                    'url': 'http://guandashi.xicp.net/static/a5.jpg',
+                },
+                  {
+                    'title':'英雄联盟等你来战',
+                    'description': '图文内容',
+                    'picurl': 'http://guandashi.xicp.net/static/a6.jpg',
+                    'url': 'http://guandashi.xicp.net/static/a6.jpg',
+                },
+                {
+                    'title':'积分转盘',
+                    'description': '图文内容',
+                    'picurl': 'http://guandashi.xicp.net/static/a2.jpg',
+                    'url': 'http://guandashi.xicp.net/lottery',
+                },
+            ]
+    response = wechat_instance.response_news(article)
+
     if isinstance(message, TextMessage):
         # 当前会话内容
         content = message.content.upper()
@@ -77,26 +176,84 @@ def index(request):
         #response = wechat_instance.response_text(content='hhh')
         elif(content=='功能'):
             response = wechat_instance.response_text(content='回复“BD”+身份证号码，可以绑定VIP，\n还可以进入菜单查询网吧剩余机器，\n买吃买喝，呼叫网管等。')
-
-
+        elif(content=='活动'):
+            #response = wechat_instance.response_text(content='博达网咖开业充值送好礼\n充100元得120元\n充200元得250元\n网费多充多送\n详情见店堂公告')
+            article=[
+                {
+                    'title':'早市1元',
+                    'description': '图文内容',
+                    'picurl': 'http://guandashi.xicp.net/static/a4.jpg',
+                    'url': 'http://guandashi.xicp.net/static/a4.jpg',
+                },
+                {
+                    'title':'充值好礼',
+                    'description': '图文内容',
+                    'picurl': 'http://guandashi.xicp.net/static/a5.jpg',
+                    'url': 'http://guandashi.xicp.net/static/a5.jpg',
+                },
+                  {
+                    'title':'英雄联盟等你来战',
+                    'description': '图文内容',
+                    'picurl': 'http://guandashi.xicp.net/static/a6.jpg',
+                    'url': 'http://guandashi.xicp.net/static/a6.jpg',
+                },
+                {
+                    'title':'积分转盘',
+                    'description': '图文内容',
+                    'picurl': 'http://guandashi.xicp.net/static/a2.jpg',
+                    'url': 'http://guandashi.xicp.net/lottery',
+                },
+            ]
+            response = wechat_instance.response_news(article)
+        elif(content=='推送' and message.source=='ovIfQtzWVePVLotiPmCOgCpXJbzA'):
+            followers= wechat_instance.get_followers()
+            users=followers.get('data')
+            response = wechat_instance.response_text(content='推送完成')
+            # wechat_instance.send_text_message(user_id='ovIfQtyugGh1uMnLqhAlx92J1U08',content='article')
+            for v in users.values():
+                for user in v:
+                    print(user)
+                    wechat_instance.send_article_message(user_id=user,articles=Promotio)
     elif isinstance(message, EventMessage):
         reply_text2=message.key
         if(reply_text2=='BindVIP'):
-            response = wechat_instance.response_text('请输入“BD”+身份证号码。\n例如：bd321326199509026644\n（注意：一个微信号只能绑定一个身份证号码）')
-
-        elif(reply_text2=='ReservePC'):
-             #selsql='select numb num from Comuter where usable =%s'
-            pcset=Computer.objects.filter(usable='0')
-            pcid=''
-            for pc in pcset:
-                pcid+=pc.numb+','
-            response = wechat_instance.response_music(music_url='http://guandashi.xicp.net/static/AreYouOk.mp3',title='Are You OK',description='歌手：雷军')
+            response = wechat_instance.response_text('请输入“BD”+身份证号码。例如：\nbd321326199509026644\n（注意：一个微信号只能绑定一个身份证号码）')
+        elif(reply_text2=='EatDrink'):
+            article=[
+                {
+                    'title':'芝士蛋糕(30元)',
+                    'description': '图文内容',
+                    'picurl': 'http://pic1a.nipic.com/2008-12-01/200812192058760_2.jpg',
+                    'url': 'http://www.nipic.com/show/1/56/b009ab3bdb9ff4ef.html',
+                },
+                {
+                    'title':'油炸鸡翅(15元)',
+                    'description': '图文内容',
+                    'picurl': 'http://img4.imgtn.bdimg.com/it/u=1146571026,3505256192&fm=21&gp=0.jpg',
+                    'url': 'http://www.nipic.com/show/1/55/6533779k90cefe6e.html',
+                },
+                  {
+                    'title':'饺子(6元一两)',
+                    'description': '图文内容',
+                    'picurl': 'http://img1.imgtn.bdimg.com/it/u=1124969323,215308632&fm=21&gp=0.jpg',
+                    'url': 'http://baozoumanhua.com/',
+                },
+                {
+                    'title':'可乐(2元)',
+                    'description': '图文内容',
+                    'picurl': 'http://www.justsayno.com/wp-content/uploads/2014/10/coke.jpg',
+                    'url': 'http://baozoumanhua.com/',
+                },
+            ]
+            response = wechat_instance.response_news(article)
         elif(reply_text2=='CallMaster'):
-
             response = wechat_instance.response_text(content='消息已传达网管，五分钟内为您服务。')
         elif(reply_text2=='ConsumeQuery'):
             response = wechat_instance.response_text(content='该功能暂未开通。')
-
+        elif(reply_text2=='CheckOut'):
+            response = wechat_instance.response_text(content='该功能暂未开通。')
+        elif(reply_text2=='Promotio'):
+            response = wechat_instance.response_news(Promotio)
     elif isinstance(message,LocationMessage):
         locat=message.location
         response = wechat_instance.response_text(content='您所在地理位置经纬度分别是：'+locat)
@@ -109,3 +266,19 @@ def index(request):
         response = wechat_instance.response_text(content='不支持的消息类型')
 
     return HttpResponse(response, content_type="application/xml")
+
+def reservePC(request):
+    pcset=Computer.objects.filter(usable='0')
+    print(pcset)
+    return render(request, 'netbar/reserve.html', {'pcset': pcset})
+
+def product(request):
+    return render(request, 'netbar/product.html')
+def single(request):
+    return render(request, 'netbar/single.html')
+def eleme(request):
+    return render(request, 'netbar/eleme.html')
+def lottery(request):
+    return render(request, 'netbar/lottery.html')
+def login(request):
+    return render(request, 'netbar/login.html')

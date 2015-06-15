@@ -1,0 +1,32 @@
+li a {
+    color: green;
+}
+
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  background: #fff ;
+  height: 22px;
+  vertical-align: middle;
+  width: 22px;
+}
+input[type="checkbox"]:focus,
+input[type="checkbox"]:hover {
+  background-position: -24px 0;
+  outline: none;
+}
+
+input[type="checkbox"]:checked {
+  background-position: -48px 0;
+}
+
+input[type="checkbox"][disabled] {
+  background-position: -72px 0;
+}
+
+input[type="checkbox"][disabled]:checked {
+  background-position: -96px 0;
+}
+img {
+    width: 100%;
+    height:auto;
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<!--meta name="viewport" content="width=320,maximum-scale=1.3,user-scalable=no"-->
+
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'netbar/style.css' %}" />
+    <title></title>
+    <style>
+
+
+
+    </style>
+    <script>
+
+
+        (function (doc, win) {
+            var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    docEl.style.fontSize = 16 * (clientWidth / 320) + 'px';
+                };
+            // Abort if browser does not support addEventListener
+            if (!doc.addEventListener) return;
+            win.addEventListener(resizeEvt, recalc, false);
+            doc.addEventListener('DOMContentLoaded', recalc, false);
+        })(document, window);
+
+    </script>
+</head>
+<body>
+<!--
+{% if pcset %}
+    <h3>可预订机器号有 </h3>
+    <ul>
+    {% for pc in pcset %}
+        <li> <input type="checkbox" size="200" />{{ pc.numb }}</li>
+    {% endfor %}
+    
+    </ul>
+
+{% else %}
+    <p>没有可预订的机器</p>
+{% endif %}
+-->
+ <img src="../static/wangbaxuanzuo.jpg" style="width: 100%"/>
+</body>
+</html>
