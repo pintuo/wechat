@@ -14,9 +14,9 @@ from wechat_sdk.context.framework.django import DatabaseContextStore
 from netbar.checkcard import *
 #from django.shortcuts import get_object_or_404, render
 
-WECHAT_TOKEN = '123456'
-AppID = 'wxdddaafdc0183cfa7'
-AppSecret = '6902741c3bb16f1ce177ba4c41eba391'
+WECHAT_TOKEN = 'sdy'
+AppID = 'wx1ec476882b029eb6'
+AppSecret = 'f41c5454ef1d0e2bb0511d05b3f62bb7'
 
 # 实例化 WechatBasic
 wechat_instance = WechatBasic(
@@ -65,7 +65,7 @@ wechat_instance.create_menu({
                         "name": "消费查询",
                         "key": "ConsumeQuery",
                     },
-                   {
+                    {
                         "type": "click",
                         "name": "结账下机",
                         "key": "CheckOut",
